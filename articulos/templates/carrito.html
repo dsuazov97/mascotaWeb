@@ -1,0 +1,59 @@
+<div class="container-fluid" style="background-color: aliceblue; border-radius: 50px;">
+    <br>
+    <div role="alert">
+        <table class="table table-bordered alert alert-warning">
+            <thead>
+                <tr scope="row" class="text-center">
+                    <td colspan="3" style="color: black; text-align: center; font-size: 32px;">Productos del Carro</td>
+                </tr>
+                <td style="font-size:15px; font-weight: bold; color:black; text-align: center;">Producto</td>
+                <td style="font-size:15px; font-weight: bold; color:black; text-align: center;">Precio</td>
+                <td style="font-size:15px; font-weight: bold; color:black; text-align: center;">Cantidad</td>
+            </thead>
+            <tbody>
+                {% if request.session.carrito.items %}
+                    {% for key, value in request.session.carrito.items %} 
+                        <tr>
+                            <td style="font-size:13px">{{ value.nombre }}</td>
+                            <td style="font-size:13px">{{ value.precio }}</td>
+                            <td style="font-size:13px">{{ value.cantidad }}
+                                <br>
+                                <a href="{% url 'agregar' value.articulo_id %}" class="badge btn btn-primary">+</a>
+                                <a href="{% url 'restar'  value.articulo_id %}" class="badge btn btn-warning">-</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Total :</th>
+                            <td colspan="2">$ {{value.total}}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="3">
+                        <div class="alert alert-info text-center" style="font-weight: bold;">Sin Productos</div>
+                    </td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        <hr>
+    </div>
+    <div class="row text-center">
+        {% if request.session.carrito.items %}
+        <div class="col-6">
+            <a href="{% url 'limpiar' %}" class="btn btn-warning">Limpiar</a>
+        </div>
+        <div class="col-6">
+            <a href="{% url 'generarBoleta' %}" class="btn btn-info">Comprar</a>
+        </div>
+        {% else %}
+        <div class="col-6">
+            <button class="btn btn-warning" disabled>Limpiar</button>
+        </div>
+        <div class="col-6">
+            <button class="btn btn-info" disabled>Comprar</button>
+        </div>
+        {% endif %}
+    </div>
+    <br>
+</div>

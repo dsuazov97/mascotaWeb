@@ -1,0 +1,245 @@
+<!DOCTYPE html> <!--definición del tipo de documento, version 5 de html-->
+<html lang="en">
+<head>
+    <!--sección de configuración-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"> <!-- llamamos a bootstrap-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/estilos.css' %}">
+    <link rel="shortcut icon" href="{% static 'img/pawprint.png' %}">
+    <script src="{% static 'js/validaForm.js' %}"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="#">  llamamos a una hoja de estilo -->
+    <title>Bienvenidos a Mascotas</title>
+</head>
+<body>
+    <!--menú de navegación-->
+    <nav class="navbar navbar-expand-sm navbar-light bg-light"> <!-- formado de arribita <3 -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#opciones"> <!--boton de hamburguesa-->
+          <span class="navbar-toggler-icon"></span> <!-- icono de las 3 lineas en opc -->
+        </button>
+
+        <!--etiqueta <a> permite crear enlaces-->
+        <a class="navbar-brand" href="#"> <!-- espacio derecho para icono -->
+            <img src="{% static 'img/pawprint.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+            Mascotas
+        </a>
+        
+        <!--permite agrupar elementos, crea secciones o cajas-->
+        <div class="collapse navbar-collapse" id="opciones" style="color: aliceblue;">
+            <ul class="navbar-nav mr-auto"> <!--etiqueta de listas desordenadas-->
+                <li class="nav-item;">
+                    <a class="nav-link" href="{% url 'inicio' %}" onmousemove="colorNav(this)" 
+                    onmouseout="transparenteNav(this)" style="border-radius: 15px;">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'mision' %}" class="nav-link" onmousemove="colorNav(this)" 
+                    onmouseout="transparenteNav(this)" style="border-radius: 15px;">¿Quienes Somos?</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'mostrarUsuario' %}" onmousemove="colorNav(this)" 
+                    onmouseout="transparenteNav(this)" style="border-radius: 15px;">Tienda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contactanos' %}" onmousemove="colorNav(this)" 
+                    onmouseout="transparenteNav(this)" style="border-radius: 15px;">Contactanos</a>
+                </li>
+            </ul>
+            {% if user.is_authenticated and user.is_superuser %}
+            <ul class="navbar-nav mt-2 mt-md-0">
+                <li class="nav-item dropdown btn btn-outline-info">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido "{{user.username}}"</a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item " href="{% url 'registrar' %}">Registrar Usuario</a>
+                      <a class="dropdown-item" href="{% url 'mostrarAdmin' %}">Mostrar Articulos</a>
+                      <a class="dropdown-item" href="{% url 'tienda' %}">Tienda Beta</a>
+                      <a class="dropdown-item" href="{% url 'boletas_usuario' %}">Pedidos</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a>
+                    </div>
+                </li>
+            </ul>
+            {% elif user.is_authenticated %}
+            <ul class="navbar-nav mt-2 mt-md-0">
+                <li class="nav-item dropdown btn btn-outline-info">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido "{{user.username}}"</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'boletas_usuario' %}">Pedidos</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a>
+                    </div>
+                </li>
+            </ul>
+            {% else %}
+            <div class="mt-2 mt-md-0">
+                <a href="{% url 'login' %}" id="user" class="btn btn-outline-info">Iniciar Sesión</a>
+            </div>
+            <div class="mt-2 mt-md-0 ml-md-2">
+                <a href="{% url 'registrar' %}" id="user" class="btn btn-outline-info">Registrarse</a>
+            </div>
+            {% endif %}
+        </div>
+        
+    </nav> <!--cierre de menú-->
+    
+    <!-- construccion de carrusel -->
+
+    <div class="container-fluid; fondoCarrusel" style="object-fit: contain;"> <!-- contenedor para carrusel -->
+        <div id="carousel1" class="carousel slide" data-ride="carousel"> <!-- comienzo de carrusel -->
+            <ol class="carousel-indicators"> <!-- permite viñetas ordenadas -->
+                <li data-target="#carousel1" data-slide-to="0" class="active" style="height: 50%;"></li> <!-- listado -->
+                <li data-target="#carousel1" data-slide-to="1"></li>
+                <li data-target="#carousel1" data-slide-to="2"></li>
+            </ol>
+            <!--configuramos nuestras imágenes-->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <a href="{% url 'tienda' %}"><img class="d-block w-100" src="{% static 'img/inicio1.jpeg' %}" style="object-fit: contain;"></a>
+                    <div class="carousel-caption">
+                        <h3 class="textocarrusel">Perros
+                        <p>Articulos para perros</p></h3>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <a href="{% url 'tienda' %}"><img class="d-block w-100" src="{% static 'img/inicio2.jpg' %}" style="object-fit: contain;"></a>
+                    <div class="carousel-caption">
+                        <h3 class="textocarrusel">Gatos
+                        <p>Articulos para gatos</p></h3>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <a href="{% url 'mision' %}"><img class="d-block w-100" src="{% static 'img/inicio3.jpg' %}" style="object-fit: contain;"></a>
+                    <div class="carousel-caption">
+                        <h3 class="textocarrusel">Misión y Visión
+                        <p>Información sobre nosotros</p></h3>
+                    </div>
+                </div>
+
+            </div><!--cerramos class inner-->
+            <a class="carousel-control-prev" href="#carousel1" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>                
+                <span class="sr-only">previous</span>
+            </a>
+
+            <a class="carousel-control-next" href="#carousel1" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>                
+                <span class="sr-only">next</span>
+            </a>
+
+        </div><!--fin del carrusel-->
+        
+    </div>
+  
+    
+    <!-- contenedores posicionables en base a 12 max-->
+
+    <!-- <div class="container-fluid">
+        <div class="row">
+            <div class="col-4">Perros</div>
+            <div class="col-4">Gatos</div>
+            <div class="col-4">Conejos</div>
+        </div>
+    </div> -->
+
+    <!-- Parrafos Inicio -->
+    <hr>
+    <div class="container-fluid" id="fuenteInicio"> <!-- contenedor que utiliza el 100%-->
+        <p>
+            ¡Bienvenidos a nuestra tienda en línea para mascotas! Si eres un amante de los animales, sabemos lo importante que es cuidar de ellos como si fueran parte de la familia. 
+            Por eso, en nuestra tienda encontrarás todo lo que necesitas para asegurarte de que tus peludos amigos estén felices, sanos y cómodos.
+        </p>
+    </div>
+    <hr>
+
+    <!-- Productos Destacados -->
+
+    <div class="container-fluid">
+        <h1 style="text-align: center; color: red; font-size: 20pt;">Productos Destacados</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card" onmousemove="colorNav(this)" 
+                onmouseout="transparenteNav(this)" style="border-radius: 15px;">
+                    <img src="{% static 'img/royal1.jpg' %}" class="card-img-top"  >
+                    <div class="card-body; centrar">
+                        <h6 class="card-title" style="text-align: center;">Royal Canin Adulto Mini Adult 7.5 Kg</h6>
+                        <h2 style="text-align: center;">$55.990</h2>
+                        <a href="{% url 'pago' %}" class="btn btn-info">Comprar</a>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" onmousemove="colorNav(this)" 
+                onmouseout="transparenteNav(this)" style="border-radius: 15px;">
+                    <img src="{% static 'img/royal2.jpg' %}" class="card-img-top">
+                    <div class="card-body; centrar">
+                        <h6 class="card-title" style="text-align: center;">Royal Canin Adulto Medium Adult 15 Kg</h6>
+                        <h2 style="text-align: center;">$83.990</h2>
+                        <a href="{% url 'pago' %}" class="btn btn-info">Comprar</a>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" onmousemove="colorNav(this)" 
+                onmouseout="transparenteNav(this)" style="border-radius: 15px;">
+                    <img src="{% static 'img/royal3.jpg' %}" class="card-img-top">
+                    <div class="card-body; centrar">
+                        <h6 class="card-title" style="text-align: center;">Royal Canin Adulto Maxi Adult 15 Kg</h6>
+                        <h2 style="text-align: center;">$83.990</h2>
+                        <a href="{% url 'pago' %}" class="btn btn-info">Comprar</a>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+
+    <div class="container-fluid" id="inicioparrafo2"> <!-- contenedor especifico -->
+        <p>
+            Además de ofrecer productos de alta calidad, nuestra tienda en línea ofrece una experiencia de compra sencilla y segura. 
+            Desde la comodidad de tu hogar, podrás explorar nuestra amplia selección de productos, leer reseñas y opiniones de otros compradores, y hacer tu pedido en solo unos pocos clics.
+        </p>
+    </div>
+    <br>
+  
+    <!-- <br> salto de linea-->
+    <!-- <hr> linea de separacion -->
+
+    <!-- para que funcione el boton de hamburguesa -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> 
+    
+    <br><br>        
+    <footer>
+        <div>
+            <div style="text-align: center;">
+                <a href="{% url 'inicio' %}"><img src="{% static 'img/pawprint.png' %}" width="100pxs" height="100px"></a>
+            </div>
+            <div>
+                <h2>Síguenos</h2>
+                <div class="redes" style="text-align: center;">
+                    <a href="https://www.facebook.com/"><img src="{% static 'img/facebook2.png' %}" width="55px" height="55px"></a>
+                        <a href="https://www.instagram.com/"><img src="{% static 'img/instagram.png' %}" width="50px" height="50px"></a>
+                            <a href="https://web.whatsapp.com/"><img src="{% static 'img/whatsapp.png' %}" width="50px" height="50px"></a>
+                                <a href="https://web.telegram.org/z/"><img src="{% static 'img/telegram.png' %}" width="50px" height="50px"></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container-fluid">
+            <p style="text-align: center; color: darkblue;">© Mascotas - Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+
+

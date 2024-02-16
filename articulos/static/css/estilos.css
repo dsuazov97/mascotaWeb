@@ -1,0 +1,216 @@
+/* SELECTOR DE ID */
+
+#popup2 {
+    /*
+    display: none; /* Oculta el contenido por defecto */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+/* SELECTOR DE CLASES */
+
+.error{
+    color: red;
+}
+
+.fondoCarrusel{
+    background-color:thistle;
+} 
+
+.centrar{
+    text-align: center;
+}
+
+.slide{
+    margin-top: 10px;
+
+}
+
+.slide img{
+    height: 65vh;
+}
+
+/* SELECTOR DE ETIQUETAS  */
+
+
+ul{
+    list-style: none;
+}
+
+footer h2{
+    color: black;
+    text-align: center;
+}
+
+footer{
+    padding: 20px;
+    background-color:thistle;
+    color: black;
+    bottom: 0;
+}
+
+/* Start: Video Responsive */
+.video-responsive {
+    overflow:hidden;
+    padding-bottom:400px; /* Adecua este valor para controlar la altura del video */
+    position:relative;
+    height:0;
+}
+.video-responsive iframe{
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    position:absolute;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+/* End: Video Responsive */
+
+h2{ /* H2 utilizado en precios*/
+    color: red;
+    font-size: 22pt;
+    text-align: center;
+}
+
+.textocarrusel{
+    text-shadow: 1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black;   
+}
+
+
+
+#cajaMision{
+    Padding:50px;
+    height:auto;
+    background-color:lavender;
+    color: midnightblue;
+    text-align:center;
+    font-size: 15pt; /*Dimensión de la fuente*/
+    overflow:hidden;
+
+}
+#cajaVision{
+    background-color:lightpink;
+    Padding:50px;
+    height:auto;
+    color: midnightblue;
+    text-align:center;
+    font-size: 15pt; /*Dimensión de la fuente*/
+    overflow:hidden;
+}
+
+#cajaInformacion{
+    background-color:lightblue;
+    Padding:50px;
+    height:auto;
+    color: midnightblue;
+    text-align:center;
+    font-size: 15pt; /*Dimensión de la fuente*/
+    overflow:hidden;
+}
+
+#fuenteInicio{
+    Padding:50px;
+    height:auto;
+    background-color:rgb(233, 223, 233);
+    color: rgb(0, 0, 0);
+    text-align:center;
+    font-size: 15pt; /*Dimensión de la fuente*/
+    overflow:hidden;
+}
+
+#inicioparrafo2{
+    Padding:50px;
+    height:auto;
+    background-color:lightpink;
+    color: rgb(0, 0, 0);
+    text-align:center;
+    font-size: 15pt; /*Dimensión de la fuente*/
+    overflow:hidden;
+}
+
+.error-control{
+    border: 1px solid red;
+}
+
+label.error{
+    color: purple;
+    width: 250px;
+    font-size: 0.8em;
+    margin-top: -5px;
+    margin-bottom: 10px;
+    font-family: cursive;
+}
+
+/* Estilos para el popup */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    
+}
+.popup.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* .popup-content {
+    position: relative;
+    width: 1200px;
+    height: 700px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    opacity: 90%;
+    overflow-y: auto;
+} */
+
+.btn-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #555;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.popup-content {
+    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    height: auto;
+    max-height: 700px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    opacity: 90%;
+    overflow-y: auto;
+    margin: auto;
+}
+
+@media screen and (max-width: 768px) {
+    .popup-content {
+        width: 90%;
+        max-width: none;
+        height: auto;
+        max-height: none;
+    }
+}

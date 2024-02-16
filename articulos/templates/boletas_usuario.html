@@ -1,0 +1,151 @@
+<!DOCTYPE html> <!--definición del tipo de documento, version 5 de html-->
+<html lang="en">
+<head>
+    <!--sección de configuración-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"> <!-- llamamos a bootstrap-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/estilos.css' %}">
+    <link rel="shortcut icon" href="{% static 'img/pawprint.png' %}">
+    <script src="{% static 'js/validaForm.js' %}"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="#">  llamamos a una hoja de estilo -->
+    <title>Bienvenidos a Mascotas</title>
+</head>
+<body>
+    <!--menú de navegación-->
+    <nav class="navbar navbar-expand-sm navbar-light bg-light"> <!-- formado de arribita <3 -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#opciones"> <!--boton de hamburguesa-->
+          <span class="navbar-toggler-icon"></span> <!-- icono de las 3 lineas en opc -->
+        </button>
+
+        <!--etiqueta <a> permite crear enlaces-->
+        <a class="navbar-brand" href="#"> <!-- espacio derecho para icono -->
+            <img src="{% static 'img/pawprint.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+            Mascotas
+        </a>
+        
+        <!--permite agrupar elementos, crea secciones o cajas-->
+        <div class="collapse navbar-collapse" id="opciones" style="color: aliceblue;">
+            <ul class="navbar-nav mr-auto"> <!--etiqueta de listas desordenadas-->
+                <li class="nav-item;">
+                    <a class="nav-link" href="{% url 'inicio' %}" onmousemove="colorNav(this)" 
+                    onmouseout="transparenteNav(this)" style="border-radius: 15px;">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'mision' %}" class="nav-link" onmousemove="colorNav(this)" 
+                    onmouseout="transparenteNav(this)" style="border-radius: 15px;">¿Quienes Somos?</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'mostrarUsuario' %}" onmousemove="colorNav(this)" 
+                    onmouseout="transparenteNav(this)" style="border-radius: 15px;">Tienda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contactanos' %}" onmousemove="colorNav(this)" 
+                    onmouseout="transparenteNav(this)" style="border-radius: 15px;">Contactanos</a>
+                </li>
+            </ul>
+            {% if user.is_authenticated and user.is_superuser %}
+            <ul class="navbar-nav mt-2 mt-md-0">
+                <li class="nav-item dropdown btn btn-outline-info">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido "{{user.username}}"</a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item " href="{% url 'registrar' %}">Registrar Usuario</a>
+                      <a class="dropdown-item" href="{% url 'mostrarAdmin' %}">Mostrar Articulos</a>
+                      <a class="dropdown-item" href="{% url 'tienda' %}">Tienda Beta</a>
+                      <a class="dropdown-item" href="{% url 'boletas_usuario' %}">Pedidos</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a>
+                    </div>
+                </li>
+            </ul>
+            {% elif user.is_authenticated %}
+            <ul class="navbar-nav mt-2 mt-md-0">
+                <li class="nav-item dropdown btn btn-outline-info">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido "{{user.username}}"</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'boletas_usuario' %}">Pedidos</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a>
+                    </div>
+                </li>
+            </ul>
+            {% else %}
+            <div class="mt-2 mt-md-0">
+                <a href="{% url 'login' %}" id="user" class="btn btn-outline-info">Iniciar Sesión</a>
+            </div>
+            <div class="mt-2 mt-md-0 ml-md-2">
+                <a href="{% url 'registrar' %}" id="user" class="btn btn-outline-info">Registrarse</a>
+            </div>
+            {% endif %}
+        </div>
+        
+    </nav> <!--cierre de menú-->
+
+<hr>
+    <div class="container" style="background-color: thistle; border-radius: 150px; padding: 40px;">
+        <div class="container">
+            <h1 style="font-size: 48pts; text-align: center;"> DETALLE DE COMPRA </h1>
+            <br>
+            <div class="container-fluid" style="background-color: rgb(255, 255, 255);">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center;">ID Boleta</th>
+                                <th style="text-align: center;">Total</th>
+                                <th style="text-align: center;">Fecha de compra</th>
+                                <th style="text-align: center;">Estado</th>
+                                <th style="text-align: center;">Usuario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for boleta in boletas %}
+                            <tr>
+                                <td style="text-align: center;">{{ boleta.id_boleta }}</td>
+                                <td style="text-align: center;">{{ boleta.total }}</td>
+                                <td style="text-align: center;">{{ boleta.fechaCompra }}</td>
+                                <td style="text-align: center;">{{ boleta.estado }}</td>
+                                <td style="text-align: center;">{{ boleta.usuario }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+
+
+<!-- para que funcione el boton de hamburguesa -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> 
+
+<br><br>        
+<footer>
+    <div>
+        <div style="text-align: center;">
+            <a href="{% url 'inicio' %}"><img src="{% static 'img/pawprint.png' %}" width="100pxs" height="100px"></a>
+        </div>
+        <div>
+            <h2>Síguenos</h2>
+            <div class="redes" style="text-align: center;">
+                <a href="https://www.facebook.com/"><img src="{% static 'img/facebook2.png' %}" width="55px" height="55px"></a>
+                    <a href="https://www.instagram.com/"><img src="{% static 'img/instagram.png' %}" width="50px" height="50px"></a>
+                        <a href="https://web.whatsapp.com/"><img src="{% static 'img/whatsapp.png' %}" width="50px" height="50px"></a>
+                            <a href="https://web.telegram.org/z/"><img src="{% static 'img/telegram.png' %}" width="50px" height="50px"></a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container-fluid">
+        <p style="text-align: center; color: darkblue;">© Mascotas - Todos los derechos reservados</p>
+    </div>
+</footer>
+
+</body>
+</html>
+
